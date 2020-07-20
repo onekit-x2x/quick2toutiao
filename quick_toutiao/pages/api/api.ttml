@@ -1,0 +1,5 @@
+<!-- pages/api/api.ttml -->
+<button open-type="getUserInfo" bindtap="getUserInfo_tap">获取用户信息</button>
+<button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber_tap">获取电话号码</button>
+
+

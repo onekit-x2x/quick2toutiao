@@ -1,0 +1,3 @@
+<!-- pages/zip/zip.ttml -->
+
+    <button bindtap="decompress"> 解压缩 </button>

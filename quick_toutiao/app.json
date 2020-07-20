@@ -1,0 +1,38 @@
+{
+  "pages":[
+    "pages/video/video",
+    "pages/request/request",
+    "pages/fetch/fetch",
+    "pages/calendar/calendar",
+    "pages/vibrator/vibrator",
+    "pages/sensor/sensor",
+    "pages/barcode/scan",
+    "pages/barcode/barcode",
+    "pages/file/file",
+    "pages/storage/storage",
+    "pages/index/index",
+    "pages/alarm/alarm",
+    "pages/form/form",
+    "pages/calendar/calendar",
+    "pages/share/share",
+    "pages/api/api",
+    "pages/geolocation/geolocation",
+    "pages/zip/zip",
+    "pages/websocket/websocket",
+    "pages/audio/audio",
+    "pages/image/image",
+    "pages/record/record",
+    "pages/brightness/brightness",
+    "pages/device/device",
+    "pages/network/network",
+    "pages/clipboard/clipboard",
+    "component/alarm/alarm",
+    "component/calendar/calendar"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "Mini Program",
+    "navigationBarTextStyle":"black"
+  }
+}

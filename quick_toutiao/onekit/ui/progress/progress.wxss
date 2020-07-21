@@ -1,0 +1,42 @@
+@import '/common/css/common.wxss';
+.item-container {
+  margin-bottom: 50rpx;
+  margin-right: 60rpx;
+  margin-left: 60rpx;
+  flex-direction: column;
+}
+.item-content {
+  margin-bottom: 60rpx;
+  flex-direction: column;
+}
+.item-content-circular {
+  margin-bottom: 60rpx;
+  flex-direction: column;
+  align-items: center;
+}
+.progerss {
+  flex: 1;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+}
+.item-title {
+  text-align: center;
+}
+.circular-1 {
+  width: 40rpx;
+  height: 40rpx;
+}
+.circular-2 {
+  width: 60rpx;
+  height: 60rpx;
+}
+.circular-3 {
+  width: 80rpx;
+  height: 80rpx;
+}
+.circular-4 {
+  width: 100rpx;
+  height: 100rpx;
+}

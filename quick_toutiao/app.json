@@ -1,5 +1,6 @@
 {
   "pages":[
+    "pages/canvas/canvas",
     "pages/video/video",
     "pages/request/request",
     "pages/fetch/fetch",

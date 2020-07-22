@@ -1,0 +1,59 @@
+<div class="doc-page">
+    <div class="page-title-wrap">
+      <text class="page-title">{{componentName}}</text>
+    </div>
+    <div class="content">
+      <text>canvas绘制时钟</text>
+      <onekit-canvas class="onekit-canvas" id="canvas1"></onekit-canvas>
+      <image show="{{imageUrl}}" src="{{imageUrl}}"></image>
+      <input type="button" class="btn" value="保存图片" onclick="savePic"></input>
+    </div>
+    <div class="content">
+      <text>canvas绘制图形</text>
+      <onekit-canvas class="onekit-canvas" id="canvas2"></onekit-canvas>
+    </div>
+    <div class="content">
+      <text>canvas绘制图片</text>
+      <onekit-canvas class="onekit-canvas" id="canvas3"></onekit-canvas>
+    </div>
+    <div class="content">
+      <text>canvas绘制元素</text>
+      <image id="image" src="/common/logo.png"></image>
+      <onekit-canvas class="onekit-canvas" id="canvas4"></onekit-canvas>
+    </div>
+    <div class="content">
+      <text>canvas像素操作</text>
+      <onekit-canvas class="onekit-canvas" id="canvas5"></onekit-canvas>
+    </div>
+    <div class="content">
+      <text class=glo-type>{{globalCompositeOperation}}</text>
+      <onekit-canvas class="onekit-canvas" id="canvas6"></onekit-canvas>
+      <input class="btn" value="切换合成方式" type="button" onclick="changeGlobalCompositeOperation"></input>
+    </div>
+    <div class="content">
+      <text>canvas绘制虚线</text>
+      <onekit-canvas class="onekit-canvas" id="canvas7"></onekit-canvas>
+    </div>
+    <div class="content">
+      <text>切换shadow方式</text>
+      <onekit-canvas class="onekit-canvas" id="canvas8"></onekit-canvas>
+       <div class="input-item">
+          <text class="input-hint">Blur：</text>
+          <input class="input-text" type="text" placeholder="默认值0" onchange="shadowChangeBlur"></input>
+        </div>
+        <div class="input-item">
+          <text class="input-hint">Color：</text>
+          <input class="input-text" type="text" placeholder="默认值fully-transparent black"
+            onchange="shadowChangeColor"></input>
+        </div>
+        <div class="input-item">
+          <text class="input-hint">OffsetX：</text>
+          <input class="input-text" type="text" placeholder="默认值0" onchange="shadowChangeOffsetX"></input>
+        </div>
+        <div class="input-item">
+          <text class="input-hint">OffsetY：</text>
+          <input class="input-text" type="text" placeholder="默认值0" onchange="shadowChangeOffsetY"></input>
+        </div>
+
+    </div>
+  </div>

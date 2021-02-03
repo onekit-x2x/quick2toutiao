@@ -1,1 +1,1 @@
-# quick2toutiao
+# quickapp2toutiao

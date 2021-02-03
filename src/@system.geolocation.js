@@ -78,20 +78,44 @@ module.exports = {
     const quick_coordType = quick_object.coordType || 'wgs84'
     quick_object = null
     PROMISE((SUCCESS) => {
-      tt.chooseLocation({
-        latitude: quick_latitude,
-        longitude: quick_longitude,
-        success: (tt_res) => {
-          const quick_res = {
-            name: tt_res.name,
-            address: tt_res.address,
-            latitude: tt_res.latitude,
-            longitude: tt_res.longitude,
-            coordType: quick_coordType,
+      if (quick_latitude == null || quick_longitude == null) {
+        tt.getLocation({
+          type: quick_coordType,
+          success: tt_res => {
+            const quick_res = {
+              latitude: tt_res.latitude,
+              longitude: tt_res.longitude,
+              speed: tt_res.speed,
+              accuracy: tt_res.accuracy,
+              altitude: tt_res.altitude,
+              verticalAccuracy: tt_res.verticalAccuracy,
+              horizontalAccuracy: tt_res.horizontalAccuracy,
+              time: new Date().getTime()
+            }
+            SUCCESS(quick_res)
           }
-          SUCCESS(quick_res)
-        }
-      })
+        })
+      } else {
+        tt.authorize({
+          scope: 'scope.userLocation',
+          success: () => {
+            tt.chooseLocation({
+              latitude: quick_latitude,
+              longitude: quick_longitude,
+              success: (tt_res) => {
+                const quick_res = {
+                  name: tt_res.name,
+                  address: tt_res.address,
+                  latitude: tt_res.latitude,
+                  longitude: tt_res.longitude,
+                  coordType: quick_coordType,
+                }
+                SUCCESS(quick_res)
+              }
+            })
+          }
+        })
+      }
     }, quick_success, quick_fail, quick_complete)
   },
   /** getLocationType */
@@ -108,30 +132,31 @@ module.exports = {
   },
   /** geolocation.subscribe */
 
-  subscribe(quick_object) {
-    if (!quick_object) {
-      return
-    }
-    tt.startLocationUpdate()
-    const quick_callback = quick_object.callback
-    quick_object = null
-    tt.onLocationChange(function (tt_res) {
-      const quick_res = {
-        latitude: tt_res.latitude,
-        longitude: tt_res.longitude,
-        speed: tt_res.speed,
-        accuracy: tt_res.accuracy,
-        altitude: tt_res.altitude,
-        verticalAccuracy: tt_res.verticalAccuracy,
-        horizontalAccuracy: tt_res.horizontalAccuracy,
-        time: new Date().getTime()
-      }
-      quick_callback(quick_res)
-    })
+  subscribe() {
+    // if (!quick_object) {
+    //   return
+    // }
+    // tt.startLocationUpdate()
+    // const quick_callback = quick_object.callback
+    // quick_object = null
+    // tt.onLocationChange(function (tt_res) {
+    //   const quick_res = {
+    //     latitude: tt_res.latitude,
+    //     longitude: tt_res.longitude,
+    //     speed: tt_res.speed,
+    //     accuracy: tt_res.accuracy,
+    //     altitude: tt_res.altitude,
+    //     verticalAccuracy: tt_res.verticalAccuracy,
+    //     horizontalAccuracy: tt_res.horizontalAccuracy,
+    //     time: new Date().getTime()
+    //   }
+    //   quick_callback(quick_res)
+    // })
+    return console.warn('subscribe is not support')
   },
   /** tt.offLocationChange */
   unsubscribe() {
-    tt.offLocationChange()
+    return console.warn('unsubscribe is not support')
   },
   /** geolocation.getSupportedCoordTypes() */
   getSupportedCoordTypes() {

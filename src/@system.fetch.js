@@ -27,9 +27,7 @@ module.exports = {
           const quick_res = {
             code: tt_res.statusCode,
             data: tt_res.data,
-            headers: tt_res.header,
-            cookies: tt_res.cookies,
-            profile: tt_res.profile
+            headers: tt_res.header
           }
           SUCCESS(quick_res)
         }

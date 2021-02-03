@@ -42,27 +42,29 @@ module.exports = {
     }
     const quick_callback = quick_object.callback
     quick_object = null
-    tt.onNetworkStatusChange(function (tt_res) {
-      let quick_res_type
-      switch (tt_res.networkType) {
-        case 'unknown':
-          quick_res_type = 'others'
-          break
-        default:
-          quick_res_type = tt_res.networkType
-          break
-      }
-      const quick_res = {
-        type: quick_res_type,
-        metered: false,
-        isConnected: tt_res.isConnected
-      }
-      quick_callback(quick_res)
-    })
+    if (!getApp().onekit_NetworkStatus) {
+      tt.onNetworkStatusChange(function (tt_res) {
+        let quick_res_type
+        switch (tt_res.networkType) {
+          case 'unknown':
+            quick_res_type = 'others'
+            break
+          default:
+            quick_res_type = tt_res.networkType
+            break
+        }
+        const quick_res = {
+          type: quick_res_type,
+          metered: false,
+          isConnected: tt_res.isConnected
+        }
+        quick_callback(quick_res)
+      })
+    }
   },
   // ///////
   unsubscribe() {
-    tt.offNetworkStatusChange()
+    getApp().onekit_NetworkStatus = false
   },
   /** getSimOperator */
   getSimOperator() {

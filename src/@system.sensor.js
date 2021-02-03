@@ -32,17 +32,20 @@ module.exports = {
     }
     tt.startCompass()
     const quick_callback = quick_object.callback
-    tt.onCompassChange(function (res) {
-      quick_callback({
-        direction: res.direction,
-        accuracy: res.accuracy
+    if (!getApp().onekit_Compass) {
+      tt.onCompassChange(function (res) {
+        quick_callback({
+          direction: res.direction
+        })
       })
-    })
+    } else {
+      getApp().onekit_Compass = false
+    }
   },
 
   /** sensor.unsubscribeCompass() */
   unsubscribeCompass() {
-    return tt.offCompassChange()
+    getApp().onekit_Compass = true
   },
 
   /** sensor.subscribeProximity */

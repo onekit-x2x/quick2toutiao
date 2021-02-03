@@ -483,12 +483,12 @@ var _Video = __webpack_require__(64);
 
 var _Video2 = _interopRequireDefault(_Video);
 
-var _service = __webpack_require__(65);
-
-var _service2 = _interopRequireDefault(_service);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
+/* eslint-disable camelcase */
+/* eslint-disable no-console */
 exports.default = {
   OnekitApp: _OnekitApp2.default,
   OnekitBehavior: _OnekitBehavior2.default,
@@ -519,12 +519,9 @@ exports.default = {
   '@system.media': _system46.default,
   '@system.image': _system48.default,
   '@system.audio': _system50.default,
-  '@hap.io.Video': _Video2.default,
-  '@service.texttoaudio': _service2.default
-}; /* eslint-disable import/no-unresolved */
-/* eslint-disable import/extensions */
-/* eslint-disable camelcase */
-/* eslint-disable no-console */
+  '@hap.io.Video': _Video2.default
+
+};
 
 /***/ }),
 /* 34 */
@@ -662,7 +659,6 @@ module.exports = {
     var quick_success = quick_object.success;
     var quick_fail = quick_object.fail;
     var quick_complete = quick_object.complete;
-    console.log(quick_buttons.length, '...........');
     quick_object = null;
     if (quick_buttons.length === 1) {
       var confirmText = quick_buttons[0].text;
@@ -948,9 +944,7 @@ module.exports = {
           var quick_res = {
             code: tt_res.statusCode,
             data: tt_res.data,
-            headers: tt_res.header,
-            cookies: tt_res.cookies,
-            profile: tt_res.profile
+            headers: tt_res.header
           };
           SUCCESS(quick_res);
         }
@@ -1626,11 +1620,7 @@ module.exports = {
       tt.scanCode({
         success: function success(tt_res) {
           var quick_res = {
-            result: tt_res.result,
-            scanType: tt_res.scanType,
-            charSet: tt_res.charSet,
-            path: tt_res.path,
-            rawData: tt_res.rawData
+            result: tt_res.result
           };
           SUCCESS(quick_res);
         }
@@ -1683,18 +1673,21 @@ module.exports = {
     }
     tt.startCompass();
     var quick_callback = quick_object.callback;
-    tt.onCompassChange(function (res) {
-      quick_callback({
-        direction: res.direction,
-        accuracy: res.accuracy
+    if (!getApp().onekit_Compass) {
+      tt.onCompassChange(function (res) {
+        quick_callback({
+          direction: res.direction
+        });
       });
-    });
+    } else {
+      getApp().onekit_Compass = false;
+    }
   },
 
 
   /** sensor.unsubscribeCompass() */
   unsubscribeCompass: function unsubscribeCompass() {
-    return tt.offCompassChange();
+    getApp().onekit_Compass = true;
   },
 
 
@@ -1918,20 +1911,44 @@ module.exports = {
     var quick_coordType = quick_object.coordType || 'wgs84';
     quick_object = null;
     (0, _PROMISE2.default)(function (SUCCESS) {
-      tt.chooseLocation({
-        latitude: quick_latitude,
-        longitude: quick_longitude,
-        success: function success(tt_res) {
-          var quick_res = {
-            name: tt_res.name,
-            address: tt_res.address,
-            latitude: tt_res.latitude,
-            longitude: tt_res.longitude,
-            coordType: quick_coordType
-          };
-          SUCCESS(quick_res);
-        }
-      });
+      if (quick_latitude == null || quick_longitude == null) {
+        tt.getLocation({
+          type: quick_coordType,
+          success: function success(tt_res) {
+            var quick_res = {
+              latitude: tt_res.latitude,
+              longitude: tt_res.longitude,
+              speed: tt_res.speed,
+              accuracy: tt_res.accuracy,
+              altitude: tt_res.altitude,
+              verticalAccuracy: tt_res.verticalAccuracy,
+              horizontalAccuracy: tt_res.horizontalAccuracy,
+              time: new Date().getTime()
+            };
+            SUCCESS(quick_res);
+          }
+        });
+      } else {
+        tt.authorize({
+          scope: 'scope.userLocation',
+          success: function success() {
+            tt.chooseLocation({
+              latitude: quick_latitude,
+              longitude: quick_longitude,
+              success: function success(tt_res) {
+                var quick_res = {
+                  name: tt_res.name,
+                  address: tt_res.address,
+                  latitude: tt_res.latitude,
+                  longitude: tt_res.longitude,
+                  coordType: quick_coordType
+                };
+                SUCCESS(quick_res);
+              }
+            });
+          }
+        });
+      }
     }, quick_success, quick_fail, quick_complete);
   },
 
@@ -1950,31 +1967,32 @@ module.exports = {
 
   /** geolocation.subscribe */
 
-  subscribe: function subscribe(quick_object) {
-    if (!quick_object) {
-      return;
-    }
-    tt.startLocationUpdate();
-    var quick_callback = quick_object.callback;
-    quick_object = null;
-    tt.onLocationChange(function (tt_res) {
-      var quick_res = {
-        latitude: tt_res.latitude,
-        longitude: tt_res.longitude,
-        speed: tt_res.speed,
-        accuracy: tt_res.accuracy,
-        altitude: tt_res.altitude,
-        verticalAccuracy: tt_res.verticalAccuracy,
-        horizontalAccuracy: tt_res.horizontalAccuracy,
-        time: new Date().getTime()
-      };
-      quick_callback(quick_res);
-    });
+  subscribe: function subscribe() {
+    // if (!quick_object) {
+    //   return
+    // }
+    // tt.startLocationUpdate()
+    // const quick_callback = quick_object.callback
+    // quick_object = null
+    // tt.onLocationChange(function (tt_res) {
+    //   const quick_res = {
+    //     latitude: tt_res.latitude,
+    //     longitude: tt_res.longitude,
+    //     speed: tt_res.speed,
+    //     accuracy: tt_res.accuracy,
+    //     altitude: tt_res.altitude,
+    //     verticalAccuracy: tt_res.verticalAccuracy,
+    //     horizontalAccuracy: tt_res.horizontalAccuracy,
+    //     time: new Date().getTime()
+    //   }
+    //   quick_callback(quick_res)
+    // })
+    return console.warn('subscribe is not support');
   },
 
   /** tt.offLocationChange */
   unsubscribe: function unsubscribe() {
-    tt.offLocationChange();
+    return console.warn('unsubscribe is not support');
   },
 
   /** geolocation.getSupportedCoordTypes() */
@@ -3210,143 +3228,6 @@ var Video = function () {
 }();
 
 exports.default = Video;
-
-/***/ }),
-/* 65 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _PROMISE = __webpack_require__(0);
-
-var _PROMISE2 = _interopRequireDefault(_PROMISE);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var plugin = requirePlugin('myPlugin'); /* eslint-disable no-undef */
-/* eslint-disable no-console */
-/* eslint-disable camelcase */
-
-
-module.exports = {
-  speak: function speak(quick_object) {
-    var InnerAudioContext = tt.createInnerAudioContext();
-    this.innerAudioContext = InnerAudioContext;
-    getApp().onekit_speak = 'play';
-    if (!quick_object) {
-      return;
-    }
-    var quick_lang = quick_object.lang;
-    var quick_content = quick_object.content;
-    var quick_rate = quick_object.rate || 1;
-    var quick_pitch = quick_object.pitch || 1;
-    var quick_success = quick_object.success;
-    var quick_fail = quick_object.fail;
-    var quick_complete = quick_object.complete;
-    quick_object = null;
-    (0, _PROMISE2.default)(function (SUCCESS) {
-      plugin.textToSpeech({
-        lang: quick_lang,
-        content: quick_content,
-        success: function success(tt_res) {
-          InnerAudioContext.src = tt_res.filename;
-          InnerAudioContext.volume = quick_pitch;
-          InnerAudioContext.playbackRate = quick_rate;
-          InnerAudioContext.play();
-          var quick_res = {
-            utteranceId: tt_res.retcode.toString(),
-            origin: tt_res.origin,
-            filename: tt_res.filename,
-            expired_time: tt_res.expired_time
-          };
-          SUCCESS(quick_res);
-        },
-        fail: function fail(res) {
-          console.log(res);
-        }
-      });
-    }, quick_success, quick_fail, quick_complete);
-  },
-  textToAudioFile: function textToAudioFile(quick_object) {
-    getApp().onekit_textToAudioFile = 'done';
-    if (!quick_object) {
-      return;
-    }
-    var quick_lang = quick_object.lang;
-    var quick_content = quick_object.content;
-    var quick_success = quick_object.success;
-    var quick_fail = quick_object.fail;
-    var quick_complete = quick_object.complete;
-    quick_object = null;
-    (0, _PROMISE2.default)(function (SUCCESS) {
-      plugin.textToSpeech({
-        lang: quick_lang,
-        content: quick_content,
-        success: function success(tt_res) {
-          var quick_res = {
-            utteranceId: tt_res.retcode.toString(),
-            origin: tt_res.origin,
-            filePath: tt_res.filename,
-            expired_time: tt_res.expired_time
-          };
-          SUCCESS(quick_res);
-        },
-        fail: function fail(res) {
-          console.log(res);
-        }
-      });
-    }, quick_success, quick_fail, quick_complete);
-  },
-  isLanguageAvailable: function isLanguageAvailable(quick_object) {
-    var quick_lang = quick_object.lang;
-    var quick_success = quick_object.success;
-    var quick_res = void 0;
-    if (quick_lang === 'zh_CN' || quick_lang === 'en_US') {
-      quick_res = {
-        isAvailable: true
-      };
-    } else {
-      quick_res = {
-        isAvailable: false
-      };
-    }
-    quick_success(quick_res);
-  },
-
-  set onttsstatechange(callback) {
-    var state = void 0;
-    switch (getApp().onekit_speak) {
-      case 'play':
-        state = 'onStart';
-        break;
-      case 'done':
-        state = 'onDone';
-        break;
-      case 'stop':
-        state = 'onStop';
-        break;
-      default:
-        state = 'onError';
-    }
-    var quick_res = {
-      state: state
-    };
-    callback(quick_res);
-  },
-  stop: function stop() {
-    getApp().onekit_speak = 'stop';
-    if (!this.innerAudioContext) return;
-    this.innerAudioContext.stop();
-  },
-  isSpeaking: function isSpeaking() {
-    if (getApp().onekit_speak === 'stop') {
-      return false;
-    } else {
-      return true;
-    }
-  }
-};
 
 /***/ })
 /******/ ]);

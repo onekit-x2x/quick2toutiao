@@ -17,11 +17,7 @@ module.exports = {
       tt.scanCode({
         success: tt_res => {
           const quick_res = {
-            result: tt_res.result,
-            scanType: tt_res.scanType,
-            charSet: tt_res.charSet,
-            path: tt_res.path,
-            rawData: tt_res.rawData,
+            result: tt_res.result
           }
           SUCCESS(quick_res)
         }

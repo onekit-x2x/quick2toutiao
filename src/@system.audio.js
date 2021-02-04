@@ -44,7 +44,8 @@ module.exports = {
     this.inneraudioContext.stop()
   },
 
-  getPlayState() {
+  getPlayState(quick_object) {
+    const quick_success = quick_object.success
     let state
     switch (getApp().onekit_play) {
       case 'play':
@@ -60,14 +61,14 @@ module.exports = {
     const quick_res = {
       state
     }
-    return quick_res
+    quick_success(quick_res)
   },
 
   set src(src) {
     getApp().onekit_src = src
     const InnerAudioContext = tt.createInnerAudioContext()
     this.inneraudioContext = InnerAudioContext
-    this.inneraudioContext.src = InnerAudioContext
+    this.inneraudioContext.src = src
   },
 
   set currentTime(currentTime) {

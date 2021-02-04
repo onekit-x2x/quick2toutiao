@@ -19,19 +19,258 @@ const network = quickapp2toutiao['@system.network']
 const device  = quickapp2toutiao['@system.device']
 const brightness  = quickapp2toutiao['@system.brightness']
 const battery  = quickapp2toutiao['@system.battery']
+const wifi   = quickapp2toutiao['@system.wifi']
+const zip   = quickapp2toutiao['@system.zip']
+const keyguard    = quickapp2toutiao['@system.keyguard']
+const image    = quickapp2toutiao['@system.image']
+const Video     = quickapp2toutiao['@hap.io.Video']
+const audio     = quickapp2toutiao['@system.audio']
+
 Page({
   data: {
 
   },
   onLoad() {
-    battery.getStatus({
-      success: function(data) {
-        console.log(`handling success: ${data.level}`)
-      },
-      fail: function(data,) {
-        console.log(data)
-      }
-    })
+    audio.src ='https://sf1-ttcdn-tos.pstatp.com/obj/developer/sdk/0000-0001.mp3'
+    audio.autoplay = true
+    audio.play()
+    setTimeout(res=>{
+      audio.stop()
+    },5000)
+    // media.pickVideo({
+    //     success: function(data) {
+    //       var mVideoTask = new Video({
+    //         uri: data.uri
+    //       })
+    //       mVideoTask.compressVideo({
+    //         success: function(data) {
+    //           console.log(
+    //             `handling success,uri = ${data.uri}, name = ${data.name}, size = ${
+    //               data.size
+    //             }`
+    //           )
+    //         },
+    //         fail: function(data) {
+    //           console.log(data)
+    //         }
+    //       })
+    //     },
+    //     fail: function(data, code) {
+    //       console.log(`handling fail, code = ${code}`)
+    //     }
+    //   })
+      
+    
+    // request.download({
+    //     url: "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png",
+    //     success(res) {
+    //       image.getImageInfo({
+    //         uri: res.filePath,
+    //         success: function(data) {
+    //           console.log(data)
+    //         },
+    //         fail: function(data, code) {
+    //           console.log(`handling fail, code = ${code}`)
+    //         }
+    //       }),
+    //       image.compressImage({
+    //         uri: res.filePath,
+    //         quality: 80,
+    //         ratio: 2, // 变为原图的1/2大小
+    //         format: 'JPEG',
+    //         success: function(data) {
+    //           console.log(data)
+    //         },
+    //         fail: function(data, code) {
+    //           console.log(`handling fail, code = ${code}`)
+    //         }
+    //       })
+    //     }
+    //   })
+         
+      
+         
+   
+    
+    // media.previewImage({
+    //   current: 0,
+    //   uris: [
+    //    'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png'
+    //   ],
+    //   success: function() {
+    //     console.log('preview success')
+    //   },
+    //   fail: function(data) {
+    //     console.log(data)
+    //   }
+    // })
+    // media.pickImage({
+    //   success: data => {
+    //     const imagePath = data.uri
+    //     if (imagePath && imagePath.length > 0) {
+    //       media.saveToPhotosAlbum({
+    //         uri: imagePath,
+    //         folderName: 'custom-folder',
+    //         success: function() {
+    //           console.log(`已保存图片于自定义目录：custom-folder`)
+    //         },
+    //         fail: function(data, code) {
+    //           console.log(`保存图片失败, 错误码：${code}`)
+    //         }
+    //       })
+    //     }
+    //   },
+    //   fail: function(data, code) {
+    //     console.log(`选择图片失败, 错误码：${code}`)
+    //   }
+    // })
+    // media.takePhoto({
+    //   success: function(data) {
+    //     console.log(`handling success: ${data.uri}`)
+    //   },
+    //   fail: function(data) {
+    //     console.log(data)
+    //   }
+    // })
+    // media.takeVideo({
+    //   success: function(data) {
+    //     console.log(`handling success: ${data.uri}`)
+    //   },
+    //   fail: function(data, code) {
+    //     console.log(`handling fail, code = ${code}`)
+    //   }
+    // })
+    // media.pickImage({
+    //   success: function(data) {
+    //     console.log(`handling success: ${data.uri}`)
+    //   },
+    //   fail: function(data, code) {
+    //     console.log(`handling fail, code = ${code}`)
+    //   }
+    // })
+    // media.pickImages({
+    //   success: function(data) {
+    //     console.log(data)
+    //   },
+    //   fail: function(data, code) {
+    //     console.log(`handling fail, code = ${code}`)
+    //   }
+    // })
+    // media.pickVideo({
+    //   success: function(data) {
+    //     console.log(`handling success: ${data.uri}`)
+    //   },
+    //   fail: function(data, code) {
+    //     console.log(`handling fail, code = ${code}`)
+    //   }
+    // })
+    // media.pickVideos({
+    //   success: function(data) {
+    //     console.log(`handling success: ${data.uris}`)
+    //   },
+    //   fail: function(data) {
+    //     console.log(data)
+    //   }
+    // })
+    // media.pickFile({
+    //   success: function(data) {
+    //     console.log(`handling success: ${data.uri}`)
+    //   },
+    //   fail: function(data) {
+    //     console.log(data)
+    //   }
+    // })
+    // keyguard.getKeyguardLockedStatus({
+    //   success: result => {
+    //     console.log(result)
+    //   },
+    //   fail: (data, code) => {
+    //     console.log(`get isKeyguardLocked fail, errMsg = ${data}`)
+    //     console.log(`get isKeyguardLocked fail, errCode = ${code}`)
+    //   }
+    // })
+    // tt.onAppHide(() => {
+    //   console.log("小游戏隐藏");
+    // });
+    //  file.writeText({
+    //   uri: 'internal://files/dir/a.zip',
+    //   text: 'test',
+    //   success: function(data) {
+    //     console.log(data)
+    //   },
+    //   fail: function(data, code) {
+    //     console.log(`handling fail, code = ${code}`)
+    //   }
+    // })
+    // file.mkdir({
+    //   uri: 'internal://files/dir',
+    //   recursive:true,
+    //   success: function(data) {
+    //     console.log(data,'sssssssssss')
+    //   },
+    //   fail: function(data, code) {
+    //     console.log(`handling fail, code = ${code}`)
+    //   }
+    // })
+    // file.list({
+    //   uri: 'internal://files/unzip',
+    //   success: function(data) {
+    //     console.log(data.fileList)
+    //   },
+    //   fail: function(data, code) {
+    //     console.log(`handling fail, code = ${code}`)
+    //   }
+    // })
+    // request.download({
+    //   url: "https://sf3-ttcdn-tos.pstatp.com/obj/developer/docs/images/test-4423286930445687.zip",
+    //   success(res) {
+    //     zip.decompress({
+    //       srcUri: res.filePath,
+    //       dstUri: 'internal://files/dir',
+    //       success: function(data) {
+    //         console.log(data)
+    //       },
+    //       fail: function(data, code) {
+    //         console.log(`handling fail, code = ${code}`)
+    //       }
+    //     })
+    //     console.log(res)
+        
+        
+    //   },
+    //   fail(res) {
+    //     console.log("下载 zip 失败", res.errMsg);
+    //   },
+    // });
+    
+    // wifi.onscanned = function(data) {
+    //   console.log(data)
+    //   for(const i of data.wifiList){
+    //     console.log(i)
+    //   }
+      
+    // }
+    // wifi.scan({
+    //   success: function(data) {
+    //     console.log(data)
+    //   },
+    //   fail: function(data) {
+    //     console.log(data)
+    //   }
+    // })
+    // tt.getConnectedWifi({
+    //   success:res=>{
+    //     console.log(res)
+    //   }
+    // })
+    // battery.getStatus({
+    //   success: function(data) {
+    //     console.log(`handling success: ${data.level}`)
+    //   },
+    //   fail: function(data) {
+    //     console.log(data)
+    //   }
+    // })
     // device.getInfo({
     //   success: function(ret) {
     //     console.log(ret)
@@ -256,15 +495,7 @@ Page({
     //     console.log(`handling fail, code = ${code}`)
     //   }
     // })
-    // file.list({
-    //   uri: 'internal://files/dir',
-    //   success: function(data) {
-    //     console.log(data.fileList)
-    //   },
-    //   fail: function(data, code) {
-    //     console.log(`handling fail, code = ${code}`)
-    //   }
-    // })
+   
     // file.delete({
     //   uri: 'internal://files/dir/a.txt',
     //   success: function(data) {

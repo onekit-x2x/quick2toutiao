@@ -15,15 +15,20 @@ module.exports = {
     quick_object = null
     const path = tt.env.USER_DATA_PATH
     const FileSystemManager = tt.getFileSystemManager()
+    const zipFilePath = quick_srcUri.indexOf('internal://') === 0 ? path + quick_srcUri.substring(10) : quick_srcUri
+    const targetPath = quick_dstUri.indexOf('internal://') === 0 ? path + quick_dstUri.substring(10) : quick_dstUri
     PROMISE((SUCCESS) => {
       FileSystemManager.unzip({
-        zipFilePath: quick_srcUri.indexOf('internal://') === 0 ? path + quick_srcUri.substring(10) : quick_srcUri,
-        targetPath: quick_dstUri.indexOf('internal://') === 0 ? path + quick_dstUri.substring(10) : quick_dstUri,
+        zipFilePath,
+        targetPath,
         success: () => {
           const quick_res = {
             errMsg: 'decompress: ok'
           }
           SUCCESS(quick_res)
+        },
+        fail: res => {
+          console.log(res)
         }
       })
     }, quick_success, quick_fail, quick_complete)

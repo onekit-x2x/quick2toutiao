@@ -5,23 +5,23 @@ import PROMISE from '../node_modules/oneutil/PROMISE'
 module.exports = {
   /** media.takePhoto */
 
-  takePhoto(quick_object) {
-    const quick_success = quick_object.success
-    const quick_fail = quick_object.fail
-    const quick_complete = quick_object.complete
-    quick_object = null
-    // const quick_cancel = quick_object.cancel
-    const CameraContext = tt.createCameraContext()
-    PROMISE((SUCCESS) => {
-      CameraContext.takePhoto({
-        success: tt_res => {
-          const quick_res = {
-            uri: tt_res.tempImagePath
-          }
-          SUCCESS(quick_res)
-        }
-      })
-    }, quick_success, quick_fail, quick_complete)
+  takePhoto() {
+    // const quick_success = quick_object.success
+    // const quick_fail = quick_object.fail
+    // const quick_complete = quick_object.complete
+    // quick_object = null
+    // // const quick_cancel = quick_object.cancel
+    // const CameraContext = tt.createCameraContext()
+    // PROMISE((SUCCESS) => {
+    //   CameraContext.takePhoto({
+    //     success: tt_res => {
+    //       const quick_res = {
+    //         uri: tt_res.tempImagePath
+    //       }
+    //       SUCCESS(quick_res)
+    //     }
+    //   })
+    // }, quick_success, quick_fail, quick_complete)
   },
   /** media.takeVideo */
   takeVideo(quick_object) {
@@ -124,25 +124,18 @@ module.exports = {
     quick_object = null
     // const quick_cancel = quick_object.cancel
     PROMISE((SUCCESS) => {
-      tt.chooseMedia({
-        mediaType: ['video'],
-        success: tt_res => {
-          const quick_files = tt_res.tempFiles.map(file => ({
-            uri: file.tempFilePath,
-            size: file.size,
-            duration: file.duration,
-            height: file.height,
-            width: file.width,
-            thumbTempFilePath: file.thumbTempFilePath,
-          }))
-          const quick_uris = []
-          for (const value of tt_res.tempFiles) {
-            quick_uris.push(value.tempFilePath)
-          }
+      tt.chooseVideo({
+        sourceType: ['album'],
+        success: swan_res => {
           const quick_res = {
-            uris: quick_uris,
-            files: quick_files,
-            type: tt_res.type
+            uris: [swan_res.tempFilePath],
+            files: [{
+              size: swan_res.size,
+              uri: swan_res.tempFilePath
+            }],
+            duration: swan_res.duration,
+            height: swan_res.height,
+            width: swan_res.width,
           }
           SUCCESS(quick_res)
         }
@@ -152,29 +145,29 @@ module.exports = {
 
 
   /** media.pickFile */
-  pickFile(quick_object) {
-    if (!quick_object) {
-      return
-    }
-    const quick_success = quick_object.success
-    const quick_fail = quick_object.fail
-    const quick_complete = quick_object.complete
-    quick_object = null
-    // const quick_cancel = quick_object.cancel
-    PROMISE((SUCCESS) => {
-      tt.chooseMessageFile({
-        count: 1,
-        success: tt_res => {
-          const quick_res = {
-            tempFiles: tt_res.tempFiles,
-            uri: tt_res.tempFiles[0].path,
-            size: tt_res.tempFiles[0].size,
-            name: tt_res.tempFiles[0].name,
-          }
-          SUCCESS(quick_res)
-        }
-      })
-    }, quick_success, quick_fail, quick_complete)
+  pickFile() {
+    // if (!quick_object) {
+    //   return
+    // }
+    // const quick_success = quick_object.success
+    // const quick_fail = quick_object.fail
+    // const quick_complete = quick_object.complete
+    // quick_object = null
+    // // const quick_cancel = quick_object.cancel
+    // PROMISE((SUCCESS) => {
+    //   tt.chooseMessageFile({
+    //     count: 1,
+    //     success: tt_res => {
+    //       const quick_res = {
+    //         tempFiles: tt_res.tempFiles,
+    //         uri: tt_res.tempFiles[0].path,
+    //         size: tt_res.tempFiles[0].size,
+    //         name: tt_res.tempFiles[0].name,
+    //       }
+    //       SUCCESS(quick_res)
+    //     }
+    //   })
+    // }, quick_success, quick_fail, quick_complete)
   },
 
   /** media.saveToPhotosAlbum */

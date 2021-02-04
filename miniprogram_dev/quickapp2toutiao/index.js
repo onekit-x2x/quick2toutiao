@@ -483,12 +483,12 @@ var _Video = __webpack_require__(64);
 
 var _Video2 = _interopRequireDefault(_Video);
 
+var _system51 = __webpack_require__(65);
+
+var _system52 = _interopRequireDefault(_system51);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/* eslint-disable import/no-unresolved */
-/* eslint-disable import/extensions */
-/* eslint-disable camelcase */
-/* eslint-disable no-console */
 exports.default = {
   OnekitApp: _OnekitApp2.default,
   OnekitBehavior: _OnekitBehavior2.default,
@@ -519,9 +519,12 @@ exports.default = {
   '@system.media': _system46.default,
   '@system.image': _system48.default,
   '@system.audio': _system50.default,
-  '@hap.io.Video': _Video2.default
-
-};
+  '@hap.io.Video': _Video2.default,
+  '@system.keyguard': _system52.default
+}; /* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
+/* eslint-disable camelcase */
+/* eslint-disable no-console */
 
 /***/ }),
 /* 34 */
@@ -2068,28 +2071,30 @@ module.exports = {
     }
     var quick_callback = quick_object.callback;
     quick_object = null;
-    tt.onNetworkStatusChange(function (tt_res) {
-      var quick_res_type = void 0;
-      switch (tt_res.networkType) {
-        case 'unknown':
-          quick_res_type = 'others';
-          break;
-        default:
-          quick_res_type = tt_res.networkType;
-          break;
-      }
-      var quick_res = {
-        type: quick_res_type,
-        metered: false,
-        isConnected: tt_res.isConnected
-      };
-      quick_callback(quick_res);
-    });
+    if (!getApp().onekit_NetworkStatus) {
+      tt.onNetworkStatusChange(function (tt_res) {
+        var quick_res_type = void 0;
+        switch (tt_res.networkType) {
+          case 'unknown':
+            quick_res_type = 'others';
+            break;
+          default:
+            quick_res_type = tt_res.networkType;
+            break;
+        }
+        var quick_res = {
+          type: quick_res_type,
+          metered: false,
+          isConnected: tt_res.isConnected
+        };
+        quick_callback(quick_res);
+      });
+    }
   },
 
   // ///////
   unsubscribe: function unsubscribe() {
-    tt.offNetworkStatusChange();
+    getApp().onekit_NetworkStatus = false;
   },
 
   /** getSimOperator */
@@ -2323,37 +2328,35 @@ module.exports = {
 "use strict";
 
 
-var _PROMISE = __webpack_require__(0);
-
-var _PROMISE2 = _interopRequireDefault(_PROMISE);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+/* eslint-disable no-console */
+/* eslint-disable camelcase */
+// import PROMISE from '../node_modules/oneutil/PROMISE'
 
 module.exports = {
   /*
   battery.getStatus* */
-  getStatus: function getStatus(quick_object) {
-    if (!quick_object) {
-      return;
-    }
-    var quick_success = quick_object.success;
-    var quick_fail = quick_object.fail;
-    var quick_complete = quick_object.complete;
-    quick_object = null;
-    (0, _PROMISE2.default)(function (SUCCESS) {
-      tt.getBatteryInfo({
-        success: function success(tt_res) {
-          var quick_res = {
-            charging: tt_res.isCharging,
-            level: tt_res.level / 100
-          };
-          SUCCESS(quick_res);
-        }
-      });
-    }, quick_success, quick_fail, quick_complete);
+  getStatus: function getStatus() {
+    // if (!quick_object) {
+    //   return
+    // }
+    // const quick_success = quick_object.success
+    // const quick_fail = quick_object.fail
+    // const quick_complete = quick_object.complete
+    // quick_object = null
+    // PROMISE((SUCCESS) => {
+    //   tt.getBatteryInfo({
+    //     success: (tt_res) => {
+    //       const quick_res = {
+    //         charging: tt_res.isCharging,
+    //         level: tt_res.level / 100,
+    //       }
+    //       SUCCESS(quick_res)
+    //     }
+    //   })
+    // }, quick_success, quick_fail, quick_complete)
+    return console.warn('getStatus is not support');
   }
-}; /* eslint-disable no-console */
-/* eslint-disable camelcase */
+};
 
 /***/ }),
 /* 57 */
@@ -2362,24 +2365,21 @@ module.exports = {
 "use strict";
 
 
-var _PROMISE = __webpack_require__(0);
-
-var _PROMISE2 = _interopRequireDefault(_PROMISE);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+/* eslint-disable consistent-return */
+/* eslint-disable no-console */
+/* eslint-disable camelcase */
+// import PROMISE from '../node_modules/oneutil/PROMISE'
 
 module.exports = {
   /** wifi.connect */
-  connect: function connect(quick_object) {
-    tt.startWifi();
-    return tt.connectWifi(quick_object);
+  connect: function connect() {
+    return console.warn('connect is not support');
   },
 
   /**
    * wifi.scan
    */
   scan: function scan(quick_object) {
-    tt.startWifi();
     return tt.getWifiList(quick_object);
   },
 
@@ -2390,55 +2390,19 @@ module.exports = {
     if (!quick_object) {
       return;
     }
-    tt.startWifi();
-    var quick_success = quick_object.success;
-    var quick_fail = quick_object.fail;
-    var quick_complete = quick_object.complete;
-    quick_object = null;
-    (0, _PROMISE2.default)(function (SUCCESS) {
-      tt.getConnectedWifi({
-        success: function success(tt_res) {
-          var quick_res = {
-            SSID: tt_res.wifi.SSID,
-            BSSID: tt_res.wifi.BSSID,
-            secure: tt_res.wifi.secure,
-            signalStrength: tt_res.wifi.signalStrength
-          };
-          SUCCESS(quick_res);
-        }
-      });
-    }, quick_success, quick_fail, quick_complete);
+    return tt.getConnectedWifi(quick_object);
   },
 
   /**
    * wifi.onscanned */
   set onscanned(callback) {
-    tt.startWifi();
     return tt.onGetWifiList(callback);
   },
   /** wifi.onstatechanged */
-  set onstatechanged(callback) {
-    tt.startWifi();
-    tt.onWifiConnected(function (tt_res) {
-      var state = void 0;
-      if (tt_res.wifi.secure) {
-        state = 1;
-      } else {
-        state = 0;
-      }
-      var quick_res = {
-        state: state,
-        SSID: tt_res.wifi.SSID,
-        BSSID: tt_res.wifi.BSSID,
-        secure: tt_res.wifi.secure,
-        signalStrength: tt_res.wifi.signalStrength
-      };
-      callback(quick_res);
-    });
+  onstatechanged: function onstatechanged() {
+    return console.warn('onstatechanged is not support');
   }
-}; /* eslint-disable consistent-return */
-/* eslint-disable no-console */
-/* eslint-disable camelcase */
+};
 
 /***/ }),
 /* 58 */
@@ -2497,8 +2461,8 @@ module.exports = {
 
 module.exports = {
   /* bluetooth.openAdapter */
-  openAdapter: function openAdapter(quick_object) {
-    return tt.openBluetoothAdapter(quick_object);
+  openAdapter: function openAdapter() {
+    return console.warn('openAdapter is not support');
   },
 
   /**
@@ -2506,101 +2470,103 @@ module.exports = {
     *
     */
 
-  closeAdapter: function closeAdapter(quick_object) {
-    return tt.closeBluetoothAdapter(quick_object);
+  closeAdapter: function closeAdapter() {
+    return console.warn('closeAdapter is not support');
   },
 
   /** bluetooth.getAdapterState */
 
-  getAdapterState: function getAdapterState(quick_object) {
-    return tt.getBluetoothAdapterState(quick_object);
+  getAdapterState: function getAdapterState() {
+    return console.warn('getAdapterState is not support');
   },
 
   /** bluetooth.onadapterstatechange 监听监听蓝牙适配器状态变化事件 */
 
-  set onadapterstatechange(callback) {
-    return tt.onBluetoothAdapterStateChange(callback);
+  onadapterstatechange: function onadapterstatechange() {
+    return console.warn('onadapterstatechange is not support');
   },
+
   /** bluetooth.startDevicesDiscovery */
 
-  startDevicesDiscovery: function startDevicesDiscovery(quick_object) {
-    return tt.startBluetoothDevicesDiscovery(quick_object);
+  startDevicesDiscovery: function startDevicesDiscovery() {
+    return console.warn('startDevicesDiscovery is not support');
   },
 
   /** bluetooth.stopDevicesDiscovery */
 
-  stopDevicesDiscovery: function stopDevicesDiscovery(quick_object) {
-    return tt.stopBluetoothDevicesDiscovery(quick_object);
+  stopDevicesDiscovery: function stopDevicesDiscovery() {
+    return console.warn('stopDevicesDiscovery is not support');
   },
 
   /** bluetooth.getDevices */
 
-  getDevices: function getDevices(quick_object) {
-    return tt.getBluetoothDevices(quick_object);
+  getDevices: function getDevices() {
+    return console.warn('getDevices is not support');
   },
 
   /** bluetooth.ondevicefound */
 
-  set ondevicefound(callback) {
-    return tt.onBluetoothDeviceFound(callback);
+  ondevicefound: function ondevicefound() {
+    return console.warn('ondevicefound is not support');
   },
+
   /** bluetooth.getConnectedDevices */
 
-  getConnectedDevices: function getConnectedDevices(quick_object) {
-    return tt.getConnectedBluetoothDevices(quick_object);
+  getConnectedDevices: function getConnectedDevices() {
+    return console.warn('getConnectedDevices is not support');
   },
 
   /** bluetooth.createBLEConnection */
 
-  createBLEConnection: function createBLEConnection(quick_object) {
-    return tt.createBLEConnection(quick_object);
+  createBLEConnection: function createBLEConnection() {
+    return console.warn('createBLEConnection is not support');
   },
 
   /** bluetooth.closeBLEConnection */
 
-  closeBLEConnection: function closeBLEConnection(quick_object) {
-    return tt.closeBLEConnection(quick_object);
+  closeBLEConnection: function closeBLEConnection() {
+    return console.warn('closeBLEConnection is not support');
   },
 
   /** bluetooth.getBLEDeviceServices */
-
-  getBLEDeviceServices: function getBLEDeviceServices(quick_object) {
-    return tt.getBLEDeviceServices(quick_object);
+  getBLEDeviceServices: function getBLEDeviceServices() {
+    return console.warn('getBLEDeviceServices is not support');
   },
 
   /** bluetooth.getBLEDeviceCharacteristics */
 
-  getBLEDeviceCharacteristics: function getBLEDeviceCharacteristics(quick_object) {
-    return tt.getBLEDeviceCharacteristics(quick_object);
+  getBLEDeviceCharacteristics: function getBLEDeviceCharacteristics() {
+    return console.warn('getBLEDeviceCharacteristics is not support');
   },
 
   /** bluetooth.readBLECharacteristicValue */
 
-  readBLECharacteristicValue: function readBLECharacteristicValue(quick_object) {
-    return tt.readBLECharacteristicValue(quick_object);
+  readBLECharacteristicValue: function readBLECharacteristicValue() {
+    return console.warn('readBLECharacteristicValue is not support');
   },
 
   /** bluetooth.writeBLECharacteristicValue */
 
-  writeBLECharacteristicValue: function writeBLECharacteristicValue(quick_object) {
-    return tt.writeBLECharacteristicValue(quick_object);
+  writeBLECharacteristicValue: function writeBLECharacteristicValue() {
+    return console.warn('writeBLECharacteristicValue is not support');
   },
 
   /** bluetooth.notifyBLECharacteristicValueChange */
 
-  notifyBLECharacteristicValueChange: function notifyBLECharacteristicValueChange(quick_object) {
-    return tt.notifyBLECharacteristicValueChange(quick_object);
+  notifyBLECharacteristicValueChange: function notifyBLECharacteristicValueChange() {
+    return console.warn('notifyBLECharacteristicValueChange is not support');
   },
 
   /** bluetooth.onblecharacteristicvaluechange */
 
-  set onblecharacteristicvaluechange(callback) {
-    return tt.onBLECharacteristicValueChange(callback);
+  onblecharacteristicvaluechange: function onblecharacteristicvaluechange() {
+    return console.warn('onblecharacteristicvaluechange is not support');
   },
+
   /** bluetooth.onbleconnectionstatechange  */
 
-  set onbleconnectionstatechange(callback) {
-    return tt.onBLEConnectionStateChange(callback);
+  onbleconnectionstatechange: function onbleconnectionstatechange() {
+    return console.warn('onbleconnectionstatechange is not support');
   }
 };
 
@@ -2630,15 +2596,20 @@ module.exports = {
     quick_object = null;
     var path = tt.env.USER_DATA_PATH;
     var FileSystemManager = tt.getFileSystemManager();
+    var zipFilePath = quick_srcUri.indexOf('internal://') === 0 ? path + quick_srcUri.substring(10) : quick_srcUri;
+    var targetPath = quick_dstUri.indexOf('internal://') === 0 ? path + quick_dstUri.substring(10) : quick_dstUri;
     (0, _PROMISE2.default)(function (SUCCESS) {
       FileSystemManager.unzip({
-        zipFilePath: quick_srcUri.indexOf('internal://') === 0 ? path + quick_srcUri.substring(10) : quick_srcUri,
-        targetPath: quick_dstUri.indexOf('internal://') === 0 ? path + quick_dstUri.substring(10) : quick_dstUri,
+        zipFilePath: zipFilePath,
+        targetPath: targetPath,
         success: function success() {
           var quick_res = {
             errMsg: 'decompress: ok'
           };
           SUCCESS(quick_res);
+        },
+        fail: function fail(res) {
+          console.log(res);
         }
       });
     }, quick_success, quick_fail, quick_complete);
@@ -2662,23 +2633,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 module.exports = {
   /** media.takePhoto */
 
-  takePhoto: function takePhoto(quick_object) {
-    var quick_success = quick_object.success;
-    var quick_fail = quick_object.fail;
-    var quick_complete = quick_object.complete;
-    quick_object = null;
-    // const quick_cancel = quick_object.cancel
-    var CameraContext = tt.createCameraContext();
-    (0, _PROMISE2.default)(function (SUCCESS) {
-      CameraContext.takePhoto({
-        success: function success(tt_res) {
-          var quick_res = {
-            uri: tt_res.tempImagePath
-          };
-          SUCCESS(quick_res);
-        }
-      });
-    }, quick_success, quick_fail, quick_complete);
+  takePhoto: function takePhoto() {
+    // const quick_success = quick_object.success
+    // const quick_fail = quick_object.fail
+    // const quick_complete = quick_object.complete
+    // quick_object = null
+    // // const quick_cancel = quick_object.cancel
+    // const CameraContext = tt.createCameraContext()
+    // PROMISE((SUCCESS) => {
+    //   CameraContext.takePhoto({
+    //     success: tt_res => {
+    //       const quick_res = {
+    //         uri: tt_res.tempImagePath
+    //       }
+    //       SUCCESS(quick_res)
+    //     }
+    //   })
+    // }, quick_success, quick_fail, quick_complete)
   },
 
   /** media.takeVideo */
@@ -2787,40 +2758,18 @@ module.exports = {
     quick_object = null;
     // const quick_cancel = quick_object.cancel
     (0, _PROMISE2.default)(function (SUCCESS) {
-      tt.chooseMedia({
-        mediaType: ['video'],
-        success: function success(tt_res) {
-          var quick_files = tt_res.tempFiles.map(function (file) {
-            return {
-              uri: file.tempFilePath,
-              size: file.size,
-              duration: file.duration,
-              height: file.height,
-              width: file.width,
-              thumbTempFilePath: file.thumbTempFilePath
-            };
-          });
-          var quick_uris = [];
-          for (var _iterator = tt_res.tempFiles, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
-            var _ref;
-
-            if (_isArray) {
-              if (_i >= _iterator.length) break;
-              _ref = _iterator[_i++];
-            } else {
-              _i = _iterator.next();
-              if (_i.done) break;
-              _ref = _i.value;
-            }
-
-            var value = _ref;
-
-            quick_uris.push(value.tempFilePath);
-          }
+      tt.chooseVideo({
+        sourceType: ['album'],
+        success: function success(swan_res) {
           var quick_res = {
-            uris: quick_uris,
-            files: quick_files,
-            type: tt_res.type
+            uris: [swan_res.tempFilePath],
+            files: [{
+              size: swan_res.size,
+              uri: swan_res.tempFilePath
+            }],
+            duration: swan_res.duration,
+            height: swan_res.height,
+            width: swan_res.width
           };
           SUCCESS(quick_res);
         }
@@ -2830,29 +2779,29 @@ module.exports = {
 
 
   /** media.pickFile */
-  pickFile: function pickFile(quick_object) {
-    if (!quick_object) {
-      return;
-    }
-    var quick_success = quick_object.success;
-    var quick_fail = quick_object.fail;
-    var quick_complete = quick_object.complete;
-    quick_object = null;
-    // const quick_cancel = quick_object.cancel
-    (0, _PROMISE2.default)(function (SUCCESS) {
-      tt.chooseMessageFile({
-        count: 1,
-        success: function success(tt_res) {
-          var quick_res = {
-            tempFiles: tt_res.tempFiles,
-            uri: tt_res.tempFiles[0].path,
-            size: tt_res.tempFiles[0].size,
-            name: tt_res.tempFiles[0].name
-          };
-          SUCCESS(quick_res);
-        }
-      });
-    }, quick_success, quick_fail, quick_complete);
+  pickFile: function pickFile() {
+    // if (!quick_object) {
+    //   return
+    // }
+    // const quick_success = quick_object.success
+    // const quick_fail = quick_object.fail
+    // const quick_complete = quick_object.complete
+    // quick_object = null
+    // // const quick_cancel = quick_object.cancel
+    // PROMISE((SUCCESS) => {
+    //   tt.chooseMessageFile({
+    //     count: 1,
+    //     success: tt_res => {
+    //       const quick_res = {
+    //         tempFiles: tt_res.tempFiles,
+    //         uri: tt_res.tempFiles[0].path,
+    //         size: tt_res.tempFiles[0].size,
+    //         name: tt_res.tempFiles[0].name,
+    //       }
+    //       SUCCESS(quick_res)
+    //     }
+    //   })
+    // }, quick_success, quick_fail, quick_complete)
   },
 
 
@@ -3029,7 +2978,8 @@ module.exports = {
     getApp().onekit_play = 'stop';
     this.inneraudioContext.stop();
   },
-  getPlayState: function getPlayState() {
+  getPlayState: function getPlayState(quick_object) {
+    var quick_success = quick_object.success;
     var state = void 0;
     switch (getApp().onekit_play) {
       case 'play':
@@ -3045,7 +2995,7 @@ module.exports = {
     var quick_res = {
       state: state
     };
-    return quick_res;
+    quick_success(quick_res);
   },
 
 
@@ -3053,7 +3003,7 @@ module.exports = {
     getApp().onekit_src = src;
     var InnerAudioContext = tt.createInnerAudioContext();
     this.inneraudioContext = InnerAudioContext;
-    this.inneraudioContext.src = InnerAudioContext;
+    this.inneraudioContext.src = src;
   },
 
   set currentTime(currentTime) {
@@ -3166,68 +3116,87 @@ var Video = function () {
   }
 
   Video.prototype.compressVideo = function compressVideo(quick_object) {
-    var quick_uri = this.object.uri;
-    var quick_bitrate = this.object.bitrate || 0.5;
-    var quick_framerate = this.object.framerate || 30;
     var quick_success = quick_object.success;
     var quick_fail = quick_object.fail;
     var quick_complete = quick_object.complete;
     quick_object = null;
     (0, _PROMISE2.default)(function (SUCCESS) {
-      tt.compressVideo({
-        src: quick_uri,
-        quality: 'medium',
-        bitrate: quick_bitrate,
-        fps: quick_framerate,
-        resolution: 0.5,
-        success: function success(tt_res) {
+      tt.chooseVideo({
+        sourceType: ['album'],
+        compressed: true,
+        success: function success(swan_res) {
           var quick_res = {
-            uri: tt_res.tempFilePath,
-            size: tt_res.size
+            uri: swan_res.tempFilePath,
+            size: swan_res.size,
+            duration: swan_res.duration,
+            height: swan_res.height,
+            width: swan_res.width
           };
           SUCCESS(quick_res);
-        },
-        fail: function fail(res) {
-          console.log(res);
         }
       });
     }, quick_success, quick_fail, quick_complete);
   };
 
-  Video.prototype.getVideoInfo = function getVideoInfo(quick_object) {
-    var quick_uri = quick_object.uri;
-    var quick_success = quick_object.success;
-    var quick_fail = quick_object.fail;
-    var quick_complete = quick_object.complete;
-    quick_object = null;
-    (0, _PROMISE2.default)(function (SUCCESS) {
-      tt.getVideoInfo({
-        src: quick_uri,
-        success: function success(tt_res) {
-          var quick_res = {
-            uri: quick_uri,
-            size: tt_res.size,
-            height: tt_res.height,
-            width: tt_res.width,
-            bitrate: tt_res.bitrate,
-            framerate: tt_res.fps,
-            orientation: tt_res.orientation,
-            type: tt_res.type,
-            duration: tt_res.duration
-          };
-          SUCCESS(quick_res);
-        },
-        fail: function fail(res) {
-          console.log(res);
-        }
-      });
-    }, quick_success, quick_fail, quick_complete);
+  Video.prototype.getVideoInfo = function getVideoInfo() {
+    // const quick_uri = quick_object.uri
+    // const quick_success = quick_object.success
+    // const quick_fail = quick_object.fail
+    // const quick_complete = quick_object.complete
+    // quick_object = null
+    // PROMISE((SUCCESS) => {
+    //   tt.getVideoInfo({
+    //     src: quick_uri,
+    //     success: tt_res => {
+    //       const quick_res = {
+    //         uri: quick_uri,
+    //         size: tt_res.size,
+    //         height: tt_res.height,
+    //         width: tt_res.width,
+    //         bitrate: tt_res.bitrate,
+    //         framerate: tt_res.fps,
+    //         orientation: tt_res.orientation,
+    //         type: tt_res.type,
+    //         duration: tt_res.duration,
+    //       }
+    //       SUCCESS(quick_res)
+    //     },
+    //     fail: res => {
+    //       console.log(res)
+    //     }
+    //   })
+    // }, quick_success, quick_fail, quick_complete)
   };
 
   return Video;
 }();
 
 exports.default = Video;
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/* eslint-disable camelcase */
+
+module.exports = {
+  getKeyguardLockedStatus: function getKeyguardLockedStatus(quick_object) {
+    var quick_success = quick_object.success;
+    var isKeyguardLocked = void 0;
+    if (tt.onAppHide(function () {})) {
+      isKeyguardLocked = true;
+    } else {
+      isKeyguardLocked = false;
+    }
+    var quick_res = {
+      isKeyguardLocked: isKeyguardLocked
+    };
+    quick_success(quick_res);
+  }
+};
 
 /***/ })
 /******/ ]);

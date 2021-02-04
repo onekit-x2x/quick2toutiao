@@ -4,95 +4,94 @@
 
 module.exports = {
   /* bluetooth.openAdapter */
-  openAdapter(quick_object) {
-    return tt.openBluetoothAdapter(quick_object)
+  openAdapter() {
+    return console.warn('openAdapter is not support')
   },
   /**
      bluetooth.closeAdapter({
     *
     */
 
-  closeAdapter(quick_object) {
-    return tt.closeBluetoothAdapter(quick_object)
+  closeAdapter() {
+    return console.warn('closeAdapter is not support')
   },
   /** bluetooth.getAdapterState */
 
-  getAdapterState(quick_object) {
-    return tt.getBluetoothAdapterState(quick_object)
+  getAdapterState() {
+    return console.warn('getAdapterState is not support')
   },
   /** bluetooth.onadapterstatechange 监听监听蓝牙适配器状态变化事件 */
 
-  set onadapterstatechange(callback) {
-    return tt.onBluetoothAdapterStateChange(callback)
+  onadapterstatechange() {
+    return console.warn('onadapterstatechange is not support')
   },
   /** bluetooth.startDevicesDiscovery */
 
-  startDevicesDiscovery(quick_object) {
-    return tt.startBluetoothDevicesDiscovery(quick_object)
+  startDevicesDiscovery() {
+    return console.warn('startDevicesDiscovery is not support')
   },
   /** bluetooth.stopDevicesDiscovery */
 
-  stopDevicesDiscovery(quick_object) {
-    return tt.stopBluetoothDevicesDiscovery(quick_object)
+  stopDevicesDiscovery() {
+    return console.warn('stopDevicesDiscovery is not support')
   },
   /** bluetooth.getDevices */
 
-  getDevices(quick_object) {
-    return tt.getBluetoothDevices(quick_object)
+  getDevices() {
+    return console.warn('getDevices is not support')
   },
   /** bluetooth.ondevicefound */
 
-  set ondevicefound(callback) {
-    return tt.onBluetoothDeviceFound(callback)
+  ondevicefound() {
+    return console.warn('ondevicefound is not support')
   },
   /** bluetooth.getConnectedDevices */
 
-  getConnectedDevices(quick_object) {
-    return tt.getConnectedBluetoothDevices(quick_object)
+  getConnectedDevices() {
+    return console.warn('getConnectedDevices is not support')
   },
   /** bluetooth.createBLEConnection */
 
-  createBLEConnection(quick_object) {
-    return tt.createBLEConnection(quick_object)
+  createBLEConnection() {
+    return console.warn('createBLEConnection is not support')
   },
   /** bluetooth.closeBLEConnection */
 
-  closeBLEConnection(quick_object) {
-    return tt.closeBLEConnection(quick_object)
+  closeBLEConnection() {
+    return console.warn('closeBLEConnection is not support')
   },
   /** bluetooth.getBLEDeviceServices */
-
-  getBLEDeviceServices(quick_object) {
-    return tt.getBLEDeviceServices(quick_object)
+  getBLEDeviceServices() {
+    return console.warn('getBLEDeviceServices is not support')
   },
   /** bluetooth.getBLEDeviceCharacteristics */
 
-  getBLEDeviceCharacteristics(quick_object) {
-    return tt.getBLEDeviceCharacteristics(quick_object)
+  getBLEDeviceCharacteristics() {
+    return console.warn('getBLEDeviceCharacteristics is not support')
   },
   /** bluetooth.readBLECharacteristicValue */
 
-  readBLECharacteristicValue(quick_object) {
-    return tt.readBLECharacteristicValue(quick_object)
+  readBLECharacteristicValue() {
+    return console.warn('readBLECharacteristicValue is not support')
   },
   /** bluetooth.writeBLECharacteristicValue */
 
-  writeBLECharacteristicValue(quick_object) {
-    return tt.writeBLECharacteristicValue(quick_object)
+  writeBLECharacteristicValue() {
+    return console.warn('writeBLECharacteristicValue is not support')
   },
   /** bluetooth.notifyBLECharacteristicValueChange */
 
-  notifyBLECharacteristicValueChange(quick_object) {
-    return tt.notifyBLECharacteristicValueChange(quick_object)
+  notifyBLECharacteristicValueChange() {
+    return console.warn('notifyBLECharacteristicValueChange is not support')
   },
   /** bluetooth.onblecharacteristicvaluechange */
 
-  set onblecharacteristicvaluechange(callback) {
-    return tt.onBLECharacteristicValueChange(callback)
+  onblecharacteristicvaluechange() {
+    return console.warn('onblecharacteristicvaluechange is not support')
   },
   /** bluetooth.onbleconnectionstatechange  */
 
-  set onbleconnectionstatechange(callback) {
-    return tt.onBLEConnectionStateChange(callback)
+  onbleconnectionstatechange() {
+    return console.warn('onbleconnectionstatechange is not support')
   }
 }

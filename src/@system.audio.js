@@ -40,7 +40,7 @@ module.exports = {
   },
 
   set src(src) {
-    const InnerAudioContext = swan.createInnerAudioContext()
+    const InnerAudioContext = tt.createInnerAudioContext()
     this.inneraudioContext = InnerAudioContext
     this.inneraudioContext.src = src
   },
@@ -49,14 +49,14 @@ module.exports = {
     this.inneraudioContext.currentTime = currentTime
   },
   get currentTime() {
-    if (swan.createInnerAudioContext().currentTime) {
-      return swan.createInnerAudioContext().currentTime
+    if (tt.createInnerAudioContext().currentTime) {
+      return tt.createInnerAudioContext().currentTime
     }
   },
 
   get duration() {
-    if (swan.createInnerAudioContext().duration) {
-      return swan.createInnerAudioContext().duration
+    if (tt.createInnerAudioContext().duration) {
+      return tt.createInnerAudioContext().duration
     }
   },
 

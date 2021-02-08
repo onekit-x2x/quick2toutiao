@@ -80,7 +80,7 @@ module.exports = {
       })
     }, quick_success, quick_fail, quick_complete)
     getApp().onekit_DownloadTask = tt.downloadFile(tt_object)
-    getApp().onekit_url = quick_url
+    getApp().onekit_download_url = quick_url
   },
   /** onDownloadComplete */
 
@@ -94,7 +94,7 @@ module.exports = {
       DownloadTask.onProgressUpdate(tt_res => {
         if (tt_res.progress === 100) {
           quick_success({
-            uri: getApp().onekit_url
+            uri: getApp().onekit_download_url
           })
         }
       })
